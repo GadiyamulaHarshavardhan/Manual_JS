@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>SPA Todo App</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+    .container { max-width: 500px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    input[type="text"] { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; }
+    button { padding: 10px 15px; background-color: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; }
+    ul { list-style-type: none; padding-left: 0; }
+    li { padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+    .completed { text-decoration: line-through; color: gray; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📝 Todo List (SPA)</h2>
+    <input type="text" id="taskInput" placeholder="Enter a new task..." />
+    <button onclick="addTask()">Add Task</button>
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    const API_URL = '/api/todos'; // ✅ Correct endpoint
+
+    async function fetchTasks() {
+      try {
+        const res = await fetch(API_URL);
+        const todos = await res.json();
+        const taskList = document.getElementById('taskList');
+        taskList.innerHTML = '';
+        todos.forEach(todo => {
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <span class="${todo.completed ? 'completed' : ''}">${todo.task}</span>
+            <div>
+              <button onclick="toggleComplete('${todo._id}', ${!todo.completed})">✓</button>
+              <button onclick="deleteTask('${todo._id}')">🗑️</button>
+            </div>
+          `;
+          taskList.appendChild(li);
+        });
+      } catch (err) {
+        console.error('Error fetching tasks:', err);
+      }
+    }
+
+    async function addTask() {
+      const taskInput = document.getElementById('taskInput');
+      const task = taskInput.value.trim();
+      if (!task) return;
+
+      try {
+        const res = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ task })
+        });
+
+        if (!res.ok) throw new Error('Failed to add task');
+
+        const data = await res.json();
+        taskInput.value = '';
+        fetchTasks();
+      } catch (err) {
+        console.error('Error adding task:', err);
+        alert('Error adding task. See console.');
+      }
+    }
+
+    async function toggleComplete(id, completed) {
+      try {
+        const res = await fetch(`${API_URL}/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ completed })
+        });
+
+        if (!res.ok) throw new Error('Failed to update task');
+
+        fetchTasks();
+      } catch (err) {
+        console.error('Error updating task:', err);
+      }
+    }
+
+    async function deleteTask(id) {
+      try {
+        const res = await fetch(`${API_URL}/${id}`, {
+          method: 'DELETE'
+        });
+
+        if (!res.ok) throw new Error('Failed to delete task');
+
+        fetchTasks();
+      } catch (err) {
+        console.error('Error deleting task:', err);
+      }
+    }
+
+    window.onload = () => {
+      fetchTasks();
+    };
+  </script>
+</body>
+</html>

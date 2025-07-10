@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Form Data Demo</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f4f4f4; }
+    .container {
+      max-width: 500px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    input[type="text"], input[type="email"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .output {
+      margin-top: 20px;
+      background: #e9ecef;
+      padding: 15px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>User Registration</h1>
+
+    <!-- Show output if data is submitted -->
+    <% if (formData) { %>
+      <div class="output">
+        <p><strong>Name:</strong> <%= formData.name %></p>
+        <p><strong>Email:</strong> <%= formData.email %></p>
+      </div>
+    <% } %>
+
+    <!-- Form to submit data -->
+    <form method="POST" action="/submit">
+      <input type="text" name="name" placeholder="Enter your name" required />
+      <input type="email" name="email" placeholder="Enter your email" required />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</body>
+</html>
