@@ -123,11 +123,3 @@ FullStack-2/
 - 🛠️ Tools: Node.js, Express.js, React.js, MongoDB, Mongoose, MongoDB Atlas
 - 🌐 University: Jawaharlal Nehru Technological University, Kakinada (JNTUK)
 
----
-
-> 💡 *Make sure to commit each experiment with clear folder names and README files inside for easy reference and grading.*
-```
-
----
-
-Would you like a **ZIP file template** with this structure or a **customized README** for each folder? I can generate that too!
