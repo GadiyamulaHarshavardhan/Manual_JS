@@ -2,17 +2,12 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  mode: 'development',
+  mode: 'development', // From knowledge base — better debugging
   entry: './src/App.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
-    clean: true
-  },
-  devServer: {
-    static: './dist',
-    hot: true,
-    open: true
+    clean: true,
   },
   module: {
     rules: [
@@ -20,12 +15,12 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader'
+          loader: 'babel-loader',
         }
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader']
+        use: ['style-loader', 'css-loader'],
       }
     ]
   },
@@ -34,19 +29,18 @@ module.exports = {
       templateContent: `
         <!DOCTYPE html>
         <html lang="en">
-          <head>
-            <meta charset="UTF-8" />
-            <title>React Props & State with CSS</title>
-          </head>
-          <body>
-            <div id="root"></div>
-          </body>
+          <head><title>React JSX Support</title></head>
+          <body><div id="root"></div></body>
         </html>
       `,
-      inject: true
+      inject: 'body'
     })
   ],
   resolve: {
     extensions: ['.js', '.jsx']
+  },
+  devServer: {
+    static: './dist',
+    hot: true
   }
 };

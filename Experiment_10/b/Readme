@@ -1,0 +1,181 @@
+Here's a **step-by-step beginner-friendly guide** to install MongoDB on **Windows**, configure it, and perform **basic CRUD operations** using MongoDB queries. This is ideal for **first-time students** learning databases.
+
+---
+
+## ✅ 1. What is MongoDB?
+
+MongoDB is a **NoSQL** database. It stores data in **JSON-like documents** with fields and values.
+
+---
+
+## 🔧 2. Installation Steps (Windows 10/11)
+
+### 🔽 Step 1: Download MongoDB
+
+1. Go to the official MongoDB website: [https://www.mongodb.com/try/download/community](https://www.mongodb.com/try/download/community)
+2. Select:
+
+   * Version: **Current Release**
+   * OS: **Windows**
+   * Package: **MSI**
+3. Click **Download**.
+
+### 💿 Step 2: Install MongoDB
+
+1. Run the downloaded `.msi` file.
+2. Click **Next** → Choose **Complete** setup.
+3. Enable these options:
+
+   * "Install MongoDB as a Service"
+   * "Run service as Network Service user"
+4. Keep default settings → Click **Install** → **Finish**
+
+### ✅ Step 3: Add MongoDB to System PATH
+
+1. Go to:
+
+   ```
+   C:\Program Files\MongoDB\Server\<version>\bin
+   ```
+2. Copy this path.
+3. Right-click **This PC** → Properties → **Advanced System Settings** → Environment Variables
+4. In **System Variables**, find `Path`, click **Edit**, then **New**, and paste the path.
+
+---
+
+## 🟩 3. Open MongoDB Shell
+
+You can use either:
+
+* **Command Prompt** (`cmd`)
+* **MongoDB Compass** (GUI version — install separately if preferred)
+
+To open MongoDB shell:
+
+```bash
+mongosh
+```
+
+If you see `>` prompt — you're in the Mongo shell.
+
+---
+
+## 📚 4. CRUD Operations in MongoDB
+
+Let’s assume a **students database** and a **students collection**.
+
+---
+
+### 🟢 A. Create (Insert Documents)
+
+```javascript
+use students         // Select or create database
+db.students.insertOne({
+    name: "Ravi",
+    age: 21,
+    branch: "CSE"
+})
+```
+
+Insert multiple:
+
+```javascript
+db.students.insertMany([
+  { name: "Anita", age: 22, branch: "ECE" },
+  { name: "Kiran", age: 20, branch: "MECH" }
+])
+```
+
+---
+
+### 🔍 B. Read (Find Documents)
+
+**Find all:**
+
+```javascript
+db.students.find()
+```
+
+**Find with filter:**
+
+```javascript
+db.students.find({ branch: "CSE" })
+```
+
+**Pretty print:**
+
+```javascript
+db.students.find().pretty()
+```
+
+---
+
+### 📝 C. Update Documents
+
+**Update one:**
+
+```javascript
+db.students.updateOne(
+  { name: "Ravi" },
+  { $set: { age: 22 } }
+)
+```
+
+**Update many:**
+
+```javascript
+db.students.updateMany(
+  { branch: "CSE" },
+  { $set: { semester: 6 } }
+)
+```
+
+---
+
+### ❌ D. Delete (Remove) Documents
+
+**Delete one:**
+
+```javascript
+db.students.deleteOne({ name: "Anita" })
+```
+
+**Delete many:**
+
+```javascript
+db.students.deleteMany({ branch: "MECH" })
+```
+
+---
+
+## 🎯 Summary Table of CRUD
+
+| Operation | Query Example                  | Description       |
+| --------- | ------------------------------ | ----------------- |
+| Create    | `insertOne()` / `insertMany()` | Add new documents |
+| Read      | `find()` / `find({})`          | View documents    |
+| Update    | `updateOne()` / `updateMany()` | Modify documents  |
+| Delete    | `deleteOne()` / `deleteMany()` | Remove documents  |
+
+---
+
+## 🧠 Tips for Beginners
+
+* MongoDB databases contain **collections**, collections contain **documents** (like rows in SQL).
+* Documents are **JSON** objects: `{ key: value }`
+* Always start with `use <dbname>` to select your database.
+* Use `db.<collection>.find().pretty()` to view your data neatly.
+
+---
+
+## 🛠️ Optional: Install MongoDB Compass (GUI)
+
+If you're uncomfortable with command line:
+
+1. Go to: [https://www.mongodb.com/products/compass](https://www.mongodb.com/products/compass)
+2. Download and install MongoDB Compass.
+3. You can **insert, update, view, and delete** data using a friendly graphical interface.
+
+---
+
+Would you like a **PDF handout** version of this for your students? I can generate that too.

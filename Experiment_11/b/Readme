@@ -1,0 +1,177 @@
+11. MongoDB – Databases, Collections and Records
+b. Write MongoDB queries to work with records using find(), limit(), sort(),
+createIndex(), aggregate(). 
+
+Here are **MongoDB queries** to work with **records** using:
+
+✅ `find()`  
+✅ `limit()`  
+✅ `sort()`  
+✅ `createIndex()`  
+✅ `aggregate()`  
+
+These queries are written for the **MongoDB Shell (`mongosh`)**.
+
+---
+
+## ✅ Sample Collection: `employees`
+
+Assume we have a collection called `employees` in a database `company`.
+
+### Insert sample data:
+
+```js
+use company
+
+db.employees.insertMany([
+  { name: "Alice", department: "HR", salary: 50000, age: 30 },
+  { name: "Bob", department: "IT", salary: 70000, age: 28 },
+  { name: "Charlie", department: "IT", salary: 60000, age: 35 },
+  { name: "Diana", department: "HR", salary: 48000, age: 25 },
+  { name: "Eve", department: "Finance", salary: 80000, age: 40 }
+])
+```
+
+---
+
+## 1. 🔍 `find()` – Query Records
+
+### Find all documents:
+
+```js
+db.employees.find().pretty()
+```
+
+### Find by condition:
+
+```js
+// Find employees in IT department
+db.employees.find({ department: "IT" }).pretty()
+
+// Find employees with salary > 60000
+db.employees.find({ salary: { $gt: 60000 } }).pretty()
+```
+
+---
+
+## 2. ⏳ `limit()` – Limit Results
+
+### Get top 2 highest paid employees:
+
+```js
+db.employees.find().sort({ salary: -1 }).limit(2).pretty()
+```
+
+---
+
+## 3. 🔁 `sort()` – Sort Records
+
+### Sort by salary (ascending):
+
+```js
+db.employees.find().sort({ salary: 1 }).pretty()
+```
+
+### Sort by salary (descending):
+
+```js
+db.employees.find().sort({ salary: -1 }).pretty()
+```
+
+### Sort by multiple fields:
+
+```js
+// Sort by department (asc), then salary (desc)
+db.employees.find().sort({ department: 1, salary: -1 }).pretty()
+```
+
+---
+
+## 4. 📇 `createIndex()` – Create Index for Performance
+
+### Create index on `salary` field:
+
+```js
+db.employees.createIndex({ salary: 1 })
+```
+
+### Create compound index on `department` and `salary`:
+
+```js
+db.employees.createIndex({ department: 1, salary: -1 })
+```
+
+### List all indexes:
+
+```js
+db.employees.getIndexes()
+```
+
+---
+
+## 5. 🧮 `aggregate()` – Perform Aggregation
+
+### Group by department and calculate average salary:
+
+```js
+db.employees.aggregate([
+  {
+    $group: {
+      _id: "$department",
+      avgSalary: { $avg: "$salary" },
+      totalEmployees: { $sum: 1 }
+    }
+  }
+])
+```
+
+### Sort and limit in aggregate:
+
+```js
+// Find top 2 highest paid employees
+db.employees.aggregate([
+  { $sort: { salary: -1 } },
+  { $limit: 2 }
+])
+```
+
+### Match + Group (Filter + Aggregate)
+
+```js
+// Average salary in IT department
+db.employees.aggregate([
+  { $match: { department: "IT" } },
+  { $group: { _id: null, avgSalary: { $avg: "$salary" } }
+])
+```
+
+---
+
+## ✅ Summary Table
+
+| Operation | Query |
+|----------|-------|
+| `find()` | `db.employees.find({ department: "IT" })` |
+| `limit()` | `db.employees.find().sort({ salary: -1 }).limit(2)` |
+| `sort()` | `db.employees.find().sort({ salary: -1 })` |
+| `createIndex()` | `db.employees.createIndex({ salary: 1 })` |
+| `aggregate()` | `db.employees.aggregate([...])` |
+
+---
+
+## 🧪 Optional: Explain Query Performance
+
+You can use `explain()` to see how MongoDB executes a query (especially after creating indexes):
+
+```js
+db.employees.find({ department: "IT" }).explain("executionStats")
+```
+
+---
+
+Let me know if you want help:
+- With more complex aggregation pipelines
+- Creating compound indexes
+- Using MongoDB with Node.js and Mongoose
+
+Happy coding! 🚀

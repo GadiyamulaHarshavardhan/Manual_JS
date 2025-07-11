@@ -1,0 +1,103 @@
+11.MongoDB – Databases, Collections and Records  
+
+a. Write MongoDB queries to Create and drop databases and collections. 
+
+Quires: 
+
+ 
+
+Reference Video: https://youtu.be/6KscmgLZFic?si=Y4EoXc5HbPeCo_3v 
+
+
+
+MongoDB queries to create and drop databases and collections, using the MongoDB Shell (mongosh). 
+
+ 
+
+ 1. Create and Use a Database 
+
+In MongoDB, you switch to or create a database using: 
+
+use <database_name> 
+  
+
+If the database doesn’t exist, it will be created when data is inserted. 
+
+Example: 
+
+use school 
+  
+
+This switches to the school database (or creates it if it doesn't exist). 
+
+Now insert a document to actually create the database: 
+
+db.students.insertOne({ name: "Alice", age: 20 }) 
+  
+
+ 
+
+ 2. Drop a Collection 
+
+To drop a collection (remove it completely): 
+
+db.<collection_name>.drop() 
+  
+
+Example: 
+
+db.students.drop() 
+  
+
+Output: 
+
+Returns true if successful 
+
+Returns false if collection does not exist 
+
+ 
+
+ 3. Drop a Database 
+
+To drop an entire database: 
+
+use <database_name>         // Switch to the database 
+db.dropDatabase() 
+  
+
+Example: 
+
+use school 
+db.dropDatabase() 
+  
+
+This deletes the entire school database, including all its collections and documents. 
+
+ 
+
+ How to Run These Queries 
+
+Open MongoDB Shell: 
+
+mongosh 
+  
+
+Create and use a database: 
+
+use school 
+  
+
+Insert a document to make the database persist: 
+
+db.students.insertOne({ name: "Alice", age: 20 }) 
+  
+
+Drop the collection: 
+
+db.students.drop() 
+  
+
+Drop the entire database: 
+
+use school 
+db.dropDatabase()

@@ -1,0 +1,23 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "A simple To-Do List app using Express and MongoDB",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "helmet": "^6.2.0",
+    "mongoose": "^7.8.7",
+    "morgan": "^1.10.0"
+  },
+  "engines": {
+    "node": ">=14"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
